@@ -13,11 +13,11 @@ from urllib.parse import quote
 
 BASE = "https://panel.altrixa.space"
 USERNAME = os.getenv("ALTRIXA_USERNAME", "test123")
-OUTPUT = "altrixa_vless.txt"
+OUTPUT = "tytan.txt"
 
 GIST_TOKEN = os.getenv("GIST_TOKEN")
 GIST_ID = os.getenv("GIST_ID")
-GIST_FILENAME = "altrixa_vless.txt"
+GIST_FILENAME = "tytan.txt"
 
 HEADERS = {
     "User-Agent": "Dart/3.7 (dart:io)",
