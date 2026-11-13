@@ -39,6 +39,6 @@ jobs:
 
       - name: Check output
         run: |
-          test -s altrixa_vless.txt
+          test -s tytan.txt
           echo "VLESS configurations:"
-          wc -l altrixa_vless.txt
+          wc -l tytan.txt
