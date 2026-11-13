@@ -1,0 +1,44 @@
+name: Altrixa VPN Update
+
+on:
+  schedule:
+    - cron: '0 0 * * *'
+
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  update:
+    name: Fetch VLESS Servers
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests
+
+      - name: Fetch Altrixa configurations
+        env:
+          ALTRIXA_USERNAME: test123
+          GIST_TOKEN: ${{ secrets.GIST_TOKEN }}
+          GIST_ID: ${{ secrets.GIST_ID }}
+        run: |
+          python altrixa_fetch.py
+
+      - name: Check output
+        run: |
+          test -s altrixa_vless.txt
+          echo "VLESS configurations:"
+          wc -l altrixa_vless.txt
