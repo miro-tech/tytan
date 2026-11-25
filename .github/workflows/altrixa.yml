@@ -3,7 +3,6 @@ name: Altrixa VPN Update
 on:
   schedule:
     - cron: '0 0 * * *'
-
   workflow_dispatch:
 
 permissions:
@@ -31,14 +30,18 @@ jobs:
 
       - name: Fetch Altrixa configurations
         env:
-          ALTRIXA_USERNAME: test123
+          ALTRIXA_USERNAME: ${{ secrets.ALTRIXA_USERNAME || 'test123' }}
           GIST_TOKEN: ${{ secrets.GIST_TOKEN }}
           GIST_ID: ${{ secrets.GIST_ID }}
+          GIST_FILENAME: tytan.txt
+        # Default: try ALL nodes (API free/premium label is geo-dependent).
+        # Fallbacks on. Gist auto when secrets present.
         run: |
-          python altrixa_fetch.py
+          python altrixa_fetch.py -o tytan.txt --sleep 1.2
 
       - name: Check output
         run: |
           test -s tytan.txt
           echo "VLESS configurations:"
           wc -l tytan.txt
+          head -n 5 tytan.txt
